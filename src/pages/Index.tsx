@@ -1,13 +1,27 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import ModeSelector from '@/components/ModeSelector';
+import ListenerInterface from '@/components/ListenerInterface';
+import DeafInterface from '@/components/DeafInterface';
+
+type Mode = 'selection' | 'listener' | 'deaf';
 
 const Index = () => {
+  const [mode, setMode] = useState<Mode>('selection');
+
+  const handleSelectMode = (selectedMode: 'listener' | 'deaf') => {
+    setMode(selectedMode);
+  };
+
+  const handleBack = () => {
+    setMode('selection');
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      {mode === 'selection' && <ModeSelector onSelectMode={handleSelectMode} />}
+      {mode === 'listener' && <ListenerInterface onBack={handleBack} />}
+      {mode === 'deaf' && <DeafInterface onBack={handleBack} />}
+    </>
   );
 };
 
